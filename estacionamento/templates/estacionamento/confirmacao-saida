@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Saída - Flanelinha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        h1 {
+            color: #7ED957;
+            margin-bottom: 1.5rem;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: #7ED957;
+            margin: 1rem 0;
+        }
+        
+        .vehicle-info {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+            text-align: left;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 0.8rem;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            width: 180px;
+            color: #2c3e50;
+        }
+        
+        .btn-back {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            background-color: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-back:hover {
+            background-color: #1a252f;
+            transform: translateY(-2px);
+        }
+        
+        .receipt {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-top: 1px dashed #ddd;
+            border-bottom: 1px dashed #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h1>SAÍDA REGISTRADA COM SUCESSO!</h1>
+        
+        <div class="vehicle-info">
+            <div class="info-row">
+                <span class="info-label">Placa do veículo:</span>
+                <span>{{ veiculo.placa }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Modelo:</span>
+                <span>{{ veiculo.modelo }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Horário de entrada:</span>
+                <span>{{ veiculo.horario_entrada|date:"d/m/Y H:i" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Horário de saída:</span>
+                <span>{{ data_saida|date:"d/m/Y H:i" }}</span>
+            </div>
+        </div>
+        
+        <div class="receipt">
+            <h3>RECIBO DE PAGAMENTO</h3>
+            <div class="info-row">
+                <span class="info-label">Tempo estacionado:</span>
+                <span>{{ horas_estacionado }} horas</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Valor pago:</span>
+                <span>R$ {{ valor_pago }}</span>
+            </div>
+        </div>
+        
+        <a href="{% url 'estacionamento:lista_veiculos' %}" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Voltar para lista de veículos
+        </a>
+    </div>
+</body>
+</html>

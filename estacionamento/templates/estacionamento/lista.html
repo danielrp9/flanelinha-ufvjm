@@ -67,10 +67,9 @@
                     <div class="table-cell time" data-label="HORÁRIO ENTRADA">
                         {{ veiculo.horario_entrada|time:"H:i" }}
                     </div>
-                    <div class="table-cell action" data-label="AÇÃO">
-                        <a href="{% url 'estacionamento:registrar_saida' veiculo.id %}" class="remove-btn">
-                            Retirar
-                        </a>
+                    <a href="{% url 'estacionamento:tela_pagamento' veiculo.id %}" class="remove-btn">
+                        Retirar
+                    </a>
                     </div>
                 </div>
                 {% empty %}
