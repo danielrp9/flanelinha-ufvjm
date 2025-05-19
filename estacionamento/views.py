@@ -109,10 +109,11 @@ def registrar_saida(request, veiculo_id):
                 return render(request, 'estacionamento/confirmacao_saida.html', context)
     
     except Exception as e:
-        # Log do erro (opcional)
+        # Log do erro 
         print(f"Erro ao verificar pagamento: {str(e)}")
     
-    return redirect('estacionamento:lista_veiculos')
+    return redirect('estacionamento:pagamento_concluido', veiculo_id=veiculo.id)
+
 
 def confirmacao_saida(request, veiculo_id):
     veiculo = get_object_or_404(Veiculo, id=veiculo_id)
@@ -131,3 +132,17 @@ def confirmacao_saida(request, veiculo_id):
         'valor_pago': valor_pago,
     }
     return render(request, 'estacionamento/confirmacao_saida.html', context)
+
+def pagamento_concluido(request, veiculo_id):
+    veiculo = get_object_or_404(Veiculo, id=veiculo_id)
+    data_saida = timezone.now()
+    horas_estacionado = round((data_saida - veiculo.horario_entrada).total_seconds() / 3600, 2)
+    valor_pago = calcular_valor(veiculo.horario_entrada)
+
+    context = {
+        'veiculo': veiculo,
+        'data_saida': data_saida,
+        'horas_estacionado': horas_estacionado,
+        'valor_pago': valor_pago,
+    }
+    return render(request, 'estacionamento/pagamento_concluido.html', context)

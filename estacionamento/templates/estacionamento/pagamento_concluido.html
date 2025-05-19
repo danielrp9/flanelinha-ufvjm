@@ -1,27 +1,23 @@
 <!DOCTYPE html>
-{% load static %}
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagamento - Flanelinha</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
-    <script src="https://js.stripe.com/v3/"></script>
+    <title>Pagamento Concluído</title>
+    <meta http-equiv="refresh" content="5;url={% url 'estacionamento:lista_veiculos' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Oswald:wght@500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #f5f5f5;
             color: #333;
         }
-        
+
         .container {
             max-width: 800px;
             margin: 2rem auto;
@@ -30,39 +26,39 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        
+
         .page-title {
             font-family: 'Oswald', sans-serif;
             color: #2c3e50;
             margin-bottom: 1.5rem;
             text-align: center;
         }
-        
+
         .vehicle-info {
             margin-bottom: 2rem;
             padding: 1.5rem;
             background: #f9f9f9;
             border-radius: 8px;
         }
-        
+
         .info-row {
             display: flex;
             margin-bottom: 0.8rem;
         }
-        
+
         .info-label {
             font-weight: 600;
             width: 150px;
             color: #7ED957;
         }
-        
+
         .payment-summary {
             background: #f0f8ff;
             padding: 1.5rem;
             border-radius: 8px;
             margin-bottom: 2rem;
         }
-        
+
         .total-amount {
             font-size: 1.5rem;
             font-weight: 700;
@@ -70,7 +66,7 @@
             text-align: center;
             margin: 1.5rem 0;
         }
-        
+
         .btn-pay {
             display: block;
             width: 100%;
@@ -84,21 +80,22 @@
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
+            text-decoration: none;
         }
-        
+
         .btn-pay:hover {
             background-color: #6bc34d;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        
+
         .back-link {
             display: inline-block;
             margin-top: 1rem;
             color: #2c3e50;
             text-decoration: none;
         }
-        
+
         .back-link:hover {
             text-decoration: underline;
         }
@@ -106,55 +103,25 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="page-title">CONFIRMAÇÃO DE SAÍDA</h1>
-        
+        <h1 class="page-title">Pagamento Concluído</h1>
+
         <div class="vehicle-info">
             <div class="info-row">
-                <span class="info-label">Placa:</span>
-                <span>{{ veiculo.placa }}</span>
+                <div class="info-label">Veículo:</div>
+                <div>{{ veiculo.placa }}</div>
             </div>
             <div class="info-row">
-                <span class="info-label">Modelo:</span>
-                <span>{{ veiculo.modelo }}</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Avarias:</span>
-                <span>{% if veiculo.avarias %}{{ veiculo.avarias }}{% else %}Nenhuma avaria registrada{% endif %}</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Entrada:</span>
-                <span>{{ veiculo.horario_entrada|date:"d/m/Y H:i" }}</span>
+                <div class="info-label">Tempo Estacionado:</div>
+                <div>{{ horas_estacionado }} hora(s)</div>
             </div>
         </div>
-        
+
         <div class="payment-summary">
-            <div class="info-row">
-                <span class="info-label">Tempo estacionado:</span>
-                <span>{{ horas_estacionado }} horas</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Valor por hora:</span>
-                <span>R$ 5,00</span>
-            </div>
-            
-            <div class="total-amount">
-                Total a pagar: R$ {{ valor_total }}
-            </div>
+            <div class="total-amount">Valor Pago: R$ {{ valor_pago }}</div>
+            <p style="text-align: center;">Você será redirecionado automaticamente em 5 segundos...</p>
         </div>
-        
-        <form method="POST" id="payment-form">
-            {% csrf_token %}
-            <input type="hidden" name="valor_total" value="{{ valor_total }}">
-            <button type="submit" class="btn-pay">
-                <i class="fas fa-credit-card"></i> PAGAR COM CARTÃO
-            </button>
-        </form>
-        
-        <a href="{% url 'estacionamento:lista_veiculos' %}" class="back-link">
-            <i class="fas fa-arrow-left"></i> Voltar para lista de veículos
-        </a>
+
+        <a href="{% url 'estacionamento:lista_veiculos' %}" class="btn-pay">Voltar Agora</a>
     </div>
-
-
 </body>
 </html>
