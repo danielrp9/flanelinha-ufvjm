@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Veículos - Flanelinha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+      <link rel="stylesheet" href="{% static 'css/historico.css' %}">
+
+</head>
+<body>
+    <!-- Menu Superior -->
+    <header>
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Flanelinha" class="logo-icon">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'estacionamento:lista_veiculos' %}">Início</a></li>
+                <li><a href="#">Contato</a></li>
+                <li><button class="view-btn">Visualizar</button></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Imagem de Fundo Parcial -->
+    <div class="background-container">
+        <img src="{% static 'img/fundo.png' %}" alt="Estacionamento" class="background-image">
+    </div>
+    
+    <!-- Seção Principal -->
+    <div class="main-content">
+        <div class="container">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <h1 class="page-title">HISTÓRICO COMPLETO</h1>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <a href="{% url 'estacionamento:lista_veiculos' %}" class="add-btn">
+                    <i class="fas fa-arrow-left"></i> Voltar para veículos ativos
+                </a>
+            </div>
+            
+            <div class="vehicle-table">
+                <div class="table-header">
+                    <div class="table-cell plate">PLACA</div>
+                    <div class="table-cell model">MODELO</div>
+                    <div class="table-cell damages">AVARIAS</div>
+                    <div class="table-cell time">ENTRADA/SAÍDA</div>
+                    <div class="table-cell action">STATUS</div>
+                </div>
+                
+                {% for veiculo in veiculos %}
+                <div class="table-row">
+                    <div class="table-cell plate" data-label="PLACA">{{ veiculo.placa }}</div>
+                    <div class="table-cell model" data-label="MODELO">{{ veiculo.modelo }}</div>
+                    <div class="table-cell damages" data-label="AVARIAS">
+                        {% if veiculo.avarias %}
+                            {{ veiculo.avarias }}
+                        {% else %}
+                            Nenhuma avaria registrada
+                        {% endif %}
+                    </div>
+                    <div class="table-cell time" data-label="ENTRADA/SAÍDA">
+                        <strong>Entrada:</strong> {{ veiculo.horario_entrada|date:"d/m/Y H:i" }}<br>
+                        {% if veiculo.horario_saida %}
+                            <strong>Saída:</strong> {{ veiculo.horario_saida|date:"d/m/Y H:i" }}
+                        {% endif %}
+                    </div>
+                    <div class="table-cell action" data-label="STATUS">
+                        {% if not veiculo.horario_saida %}
+                            <span class="status-badge status-active">Ativo</span>
+                        {% else %}
+                            <span class="status-badge status-inactive">Finalizado</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="table-row" style="justify-content: center; padding: 2rem;">
+                    <div style="text-align: center; color: #666;">
+                        Nenhum veículo registrado no histórico
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div> <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <img src="{% static 'img/logo-footer.png' %}" alt="Flanelinha" class="footer-logo-icon">
+                </div>
+                <p class="footer-description">
+                    Sistema automatizado que simplifica a gestão de estacionamentos, oferecendo cadastro de veículos, 
+                    controle de entrada/saída com códigos únicos, cálculo automático de tarifas e geração de relatórios.
+                </p>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Serviços</h3>
+                <ul class="footer-list">
+                    <li><a href="#">Registro de veículos</a></li>
+                    <li><a href="#">Controle de vagas</a></li>
+                    <li><a href="#">Cálculo de tarifas</a></li>
+                    <li><a href="#">Relatórios diários</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Informações</h3>
+                <ul class="footer-list">
+                    <li><a href="#">Sobre nós</a></li>
+                    <li><a href="#">Termos de uso</a></li>
+                    <li><a href="#">Política de privacidade</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Redes Sociais</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <p style="margin-top: 0.8rem; font-family: 'Montserrat', sans-serif; font-size: 0.85rem;">Siga-nos nas redes sociais</p>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

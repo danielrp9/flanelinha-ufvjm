@@ -1,11 +1,13 @@
 from django.db import models
+from django.utils import timezone
 
-class CarroEstacionado(models.Model):
-    placa = models.CharField(max_length=10)
-    nome_motorista = models.CharField(max_length=100)
-    numero_contato = models.CharField(max_length=15)
-    hora_estacionado = models.DateTimeField(auto_now_add=True)
-    codigo_verificacao = models.CharField(max_length=6, blank=True, null=True)
+class Veiculo(models.Model):
+    placa = models.CharField(max_length=7, unique=True)
+    modelo = models.CharField(max_length=50)
+    cor    = models.CharField(max_length=20)
+    avarias = models.TextField(blank=True)           # ← NOVO
+    horario_entrada = models.DateTimeField(default=timezone.now)
+    horario_saida   = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.placa
+        return f"{self.modelo} - {self.placa}"

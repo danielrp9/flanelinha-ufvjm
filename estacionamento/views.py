@@ -1,42 +1,36 @@
-from django.shortcuts import render, redirect
-from .models import CarroEstacionado
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Veiculo
 from django.utils import timezone
-import random
+from .forms import VeiculoForm
 
-def home(request):
-    return render(request, 'estacionamento/home.html')
+def lista_veiculos(request):
+    veiculos = Veiculo.objects.all()
+    return render(request, 'estacionamento/lista.html', {'veiculos': veiculos})
 
-def estacionar_carro(request):
+def adicionar_veiculo(request):
     if request.method == 'POST':
-        placa = request.POST['placa']
-        nome = request.POST['nome']
-        contato = request.POST['contato']
-        codigo = str(random.randint(100000, 999999))  # gerar código de verificação
-        CarroEstacionado.objects.create(
-            placa=placa,
-            nome_motorista=nome,
-            numero_contato=contato,
-            codigo_verificacao=codigo
-        )
-        # Aqui futuramente você poderá enviar SMS com o código
-        return redirect('home')
-    return render(request, 'estacionamento/formulario_estacionar.html')
+        form = VeiculoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('estacionamento:lista_veiculos')
+    else:
+        form = VeiculoForm()
+    return render(request, 'estacionamento/adicionar.html', {'form': form})
 
-def retirar_carro(request):
-    if request.method == 'POST':
-        placa = request.POST['placa']
-        codigo = request.POST['codigo']
-        try:
-            carro = CarroEstacionado.objects.get(placa=placa, codigo_verificacao=codigo)
-            hora_saida = timezone.now()
-            tempo_estacionado = hora_saida - carro.hora_estacionado
-            minutos = tempo_estacionado.total_seconds() / 60
-            valor_a_pagar = round(minutos * 0.1, 2)  # exemplo: R$0,10 por minuto
-            return render(request, 'estacionamento/resultado.html', {
-                'placa': carro.placa,
-                'valor': valor_a_pagar
-            })
-        except CarroEstacionado.DoesNotExist:
-            return render(request, 'estacionamento/formulario_retirar.html', {'erro': 'Placa ou código inválido.'})
+def registrar_saida(request, veiculo_id):
+    veiculo = get_object_or_404(Veiculo, id=veiculo_id)
+    veiculo.horario_saida = timezone.now()
+    veiculo.save()
+    return redirect('estacionamento:lista_veiculos')
 
-    return render(request, 'estacionamento/formulario_retirar.html')
+def lista_veiculos(request):
+    veiculos_ativos = Veiculo.objects.filter(horario_saida__isnull=True).order_by('-horario_entrada')
+    return render(request, 'estacionamento/lista.html', {'veiculos_ativos': veiculos_ativos})
+
+def historico_veiculos(request):
+    veiculos = Veiculo.objects.all().order_by('-horario_entrada')
+    return render(request, 'estacionamento/historico.html', {'veiculos': veiculos})
+
+def historico_veiculos(request):
+    veiculos = Veiculo.objects.all().order_by('-horario_entrada')
+    return render(request, 'estacionamento/historico.html', {'veiculos': veiculos})
