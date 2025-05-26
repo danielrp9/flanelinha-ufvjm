@@ -1,5 +1,5 @@
 [phases.setup]
-nixpkgs = ["python3", "gcc", "mysql", "libmysqlclient", "pkg-config", "openssl", "zlib"]
+nixpkgs = ["python3", "gcc", "pkg-config", "openssl", "zlib"]
 commands = [
   "python -m venv /opt/venv",
   "/opt/venv/bin/pip install --upgrade pip",
