@@ -1,9 +1,0 @@
-[phases.setup]
-nixpkgs = ["python3", "gcc", "mysql", "libmysqlclient", "pkg-config", "openssl", "zlib"]
-commands = [
-  "/opt/venv/bin/pip install --upgrade pip",
-  "/opt/venv/bin/pip install -r requirements.txt"
-]
-
-[start]
-cmd = "/opt/venv/bin/gunicorn flanelinha.wsgi --bind 0.0.0.0:8000"
