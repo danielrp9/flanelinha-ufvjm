@@ -1,12 +1,12 @@
-[build]
-builder = "nixpacks"
-
 [phases.setup]
-commands = [
-  "python -m venv /opt/venv",
-  "/opt/venv/bin/pip install --upgrade pip",
-  "/opt/venv/bin/pip install -r requirements.txt"
-]
+nixpkgs = ["python3", "gcc", "mysql", "libmysqlclient", "pkg-config", "openssl", "zlib"]
+
+[phases.setup.commands]
+  install = [
+    "python -m venv /opt/venv",
+    "/opt/venv/bin/pip install --upgrade pip",
+    "/opt/venv/bin/pip install -r requirements.txt"
+  ]
 
 [start]
 cmd = "/opt/venv/bin/gunicorn flanelinha.wsgi --bind 0.0.0.0:8000"
