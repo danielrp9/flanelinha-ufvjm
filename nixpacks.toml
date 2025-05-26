@@ -7,4 +7,3 @@ commands = [
 
 [phases.start]
 cmd = "gunicorn flanelinha.wsgi --bind 0.0.0.0:8000"
-python manage.py migrate
