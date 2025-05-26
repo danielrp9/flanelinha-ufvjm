@@ -52,7 +52,9 @@ def tela_pagamento(request, veiculo_id):
     if request.method == 'POST':
         # Processar pagamento com Stripe
         try:
-            valor_centavos = int(float(request.POST.get('valor_total')) * 100)
+            valor_str = request.POST.get('valor_total', '0').replace(',', '.')
+            valor_centavos = int(float(valor_str) * 100)
+
             
             checkout_session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
