@@ -25,9 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 #DEBUG = os.getenv('DEBUG') == 'True'
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
-AALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME', 'localhost'), 'localhost', '127.0.0.1']
-LLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME', 'localhost')]
+ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME', 'localhost')]
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
