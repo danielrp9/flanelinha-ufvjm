@@ -1,0 +1,504 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        /* Menu Superior Transparente */
+        header {
+            background-color: transparent;
+            padding: 1.2rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            width: 100%;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            font-family: 'Oswald', sans-serif;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            height: 40px;
+            width: auto;
+            max-width: 150px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        nav a:hover {
+            color: #7ED957;
+        }
+        
+        .view-btn {
+            background-color: #7ED957;
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 11px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .view-btn:hover {
+            background-color: #6bc34d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Seção Principal com Imagem de Fundo */
+        .main-content {
+            flex: 1;
+            position: relative;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-top: 5rem;
+        }
+        
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+        
+        /* Texto de Vagas Disponíveis - Layout Compacto */
+        .vagas-container {
+            position: absolute;
+            left: 4rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .vagas-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .vagas-content {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
+        
+        .vagas-number {
+            font-family: 'Oswald', sans-serif;
+            font-size: 8rem;
+            font-weight: 600;
+            line-height: 0.8;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: #7ED957;
+        }
+        
+        .vagas-words {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0.8rem;
+        }
+        
+        .vagas-word {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            line-height: 0.9;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .vagas-sub{
+            font-family: 'Oswald', sans-serif;
+            font-size: 40px;
+            font-weight: 500;
+            line-height: 0.9;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Caixa de Informações Ajustada */
+        .info-box {
+            background-color: white;
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
+            margin-right: 4rem;
+            margin-bottom: -40px;
+        }
+        
+        .info-box h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            border-bottom: 3px solid #7ED957;
+            padding-bottom: 0.5rem;
+            font-family: 'Oswald', sans-serif;
+        }
+        
+        .form-group {
+            margin-bottom: 0.8rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.85rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .form-group input, 
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            transition: border 0.3s;
+            background-color: #eeeeee;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .form-group input:focus, 
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #7ED957;
+            outline: none;
+        }
+        
+        .form-group textarea {
+            height: 60px;
+            resize: vertical;
+        }
+        
+        .register-btn {
+            background-color: #7ED957;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 0.3rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .register-btn:hover {
+            background-color: #6bc34d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Rodapé Branco Compacto */
+        footer {
+            background-color: white;
+            color: #2c3e50;
+            padding: 3rem 2rem 1.5rem;
+            position: relative;
+            z-index: 5;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-logo {
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            color: #2c3e50;
+            font-family: 'Oswald', sans-serif;
+        }
+        
+        .footer-logo-icon {
+            height: 50px;
+            width: auto;
+            max-width: 200px;
+        }
+        
+        .footer-description {
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+            font-size: 0.85rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #7ED957;
+            position: relative;
+            padding-bottom: 0.4rem;
+            font-family: 'Oswald', sans-serif;
+        }
+        
+        .footer-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: #7ED957;
+        }
+        
+        .footer-list {
+            list-style: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+        }
+        
+        .footer-list li {
+            margin-bottom: 0.6rem;
+        }
+        
+        .footer-list a {
+            color: #2c3e50;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-list a:hover {
+            color: #7ED957;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
+        }
+        
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .social-icon:hover {
+            background-color: #7ED957;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Mensagens de erro/sucesso */
+        .messages {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        
+        .alert-success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+        
+        .alert-error {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+        
+        /* Responsividade - Ajustes para Mobile */
+        @media (max-width: 768px) {
+            header {
+                padding: 0.8rem 1rem;
+                background-color: rgba(0, 0, 0, 0.7);
+            }
+            
+            .logo-icon {
+                height: 35px;
+                max-width: 120px;
+            }
+            
+            nav ul {
+                gap: 0.5rem;
+            }
+            
+            nav a {
+                display: none;
+            }
+            
+            .view-btn {
+                display: block;
+                padding: 0.4rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .main-content {
+                justify-content: center;
+                padding: 1rem;
+                min-height: 60vh;
+                padding-top: 4rem;
+            }
+            
+            .vagas-container {
+                left: 1.5rem;
+                top: 30%;
+                transform: none;
+            }
+            
+            .vagas-text {
+                font-size: 1.2rem;
+            }
+            
+            .vagas-number {
+                font-size: 3rem;
+            }
+            
+            .vagas-word {
+                font-size: 1.2rem;
+            }
+            
+            .info-box {
+                width: 90%;
+                padding: 1rem 1.2rem;
+                margin: 1rem auto -25px;
+            }
+            
+            footer {
+                padding: 2rem 1.5rem 1rem;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+            
+            .footer-column {
+                min-width: 100%;
+            }
+            
+            .footer-logo-icon {
+                height: 40px;
+                max-width: 150px;
+            }
+        }
+
+        /* Ajustes para telas muito pequenas */
+        @media (max-width: 480px) {
+            header {
+                padding: 0.7rem 0.8rem;
+            }
+            
+            .logo-icon {
+                height: 30px;
+                max-width: 100px;
+            }
+            
+            .view-btn {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.7rem;
+            }
+            
+            .vagas-container {
+                left: 1rem;
+                top: 25%;
+            }
+            
+            .vagas-text {
+                font-size: 1rem;
+            }
+            
+            .vagas-number {
+                font-size: 2.5rem;
+            }
+            
+            .vagas-word {
+                font-size: 1rem;
+            }
+            
+            .info-box {
+                width: 95%;
+                padding: 0.8rem 1rem;
+            }
+            
+            .footer-logo-icon {
+                height: 35px;
+                max-width: 120px;
+            }
+        }
+ 
