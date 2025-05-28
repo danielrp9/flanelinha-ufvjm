@@ -8,10 +8,6 @@ from .forms import VeiculoForm
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-def lista_veiculos(request):
-    veiculos = Veiculo.objects.all()
-    return render(request, 'estacionamento/lista.html', {'veiculos': veiculos})
-
 def adicionar_veiculo(request):
     if request.method == 'POST':
         form = VeiculoForm(request.POST)
@@ -22,19 +18,11 @@ def adicionar_veiculo(request):
         form = VeiculoForm()
     return render(request, 'estacionamento/adicionar.html', {'form': form})
 
-def registrar_saida(request, veiculo_id):
-    veiculo = get_object_or_404(Veiculo, id=veiculo_id)
-    veiculo.horario_saida = timezone.now()
-    veiculo.save()
-    return redirect('estacionamento:lista_veiculos')
+
 
 def lista_veiculos(request):
     veiculos_ativos = Veiculo.objects.filter(horario_saida__isnull=True).order_by('-horario_entrada')
     return render(request, 'estacionamento/lista.html', {'veiculos_ativos': veiculos_ativos})
-
-def historico_veiculos(request):
-    veiculos = Veiculo.objects.all().order_by('-horario_entrada')
-    return render(request, 'estacionamento/historico.html', {'veiculos': veiculos})
 
 def historico_veiculos(request):
     veiculos = Veiculo.objects.all().order_by('-horario_entrada')
@@ -121,7 +109,9 @@ def confirmacao_saida(request, veiculo_id):
     veiculo = get_object_or_404(Veiculo, id=veiculo_id)
     data_saida = timezone.now()
     horas_estacionado = calcular_horas(veiculo.horario_entrada, data_saida)
-    valor_pago = calcular_valor(horas_estacionado)
+    #valor_pago = calcular_valor(horas_estacionado)
+    valor_pago = calcular_valor(veiculo.horario_entrada)
+
 
     # Atualiza o veículo como "saiu"
     veiculo.horario_saida = data_saida
