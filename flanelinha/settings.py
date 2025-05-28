@@ -18,21 +18,21 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ECRET_KEY = os.getenv('SECRET_KEY')
+#DEBUG = os.getenv('DEBUG') == 'True'
+ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME', 'localhost')]
+ALLOWED_HOSTS = ['flanelinha-ufvjm.onrender.com', 'localhost', '127.0.0.1']
 
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
-#DEBUG = os.getenv('DEBUG') == 'True'
-ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME', 'localhost')]
-ALLOWED_HOSTS = ['flanelinha-ufvjm.onrender.com', 'localhost', '127.0.0.1']
-#ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
-
-# SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = False
 
 
 # Application definition
