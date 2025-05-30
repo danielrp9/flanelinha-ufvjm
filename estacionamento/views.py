@@ -9,15 +9,27 @@ from .forms import VeiculoForm
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def adicionar_veiculo(request):
+    total_vagas = 120
+    vagas_ocupadas = Veiculo.objects.filter(horario_saida__isnull=True).count()
+    vagas_disponiveis = total_vagas - vagas_ocupadas
+    
     if request.method == 'POST':
         form = VeiculoForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('estacionamento:lista_veiculos')
+            # Verifica se há vagas disponíveis antes de salvar
+            if vagas_ocupadas < total_vagas:
+                form.save()
+                return redirect('estacionamento:lista_veiculos')
+            else:
+                messages.error(request, "Não há vagas disponíveis no momento.")
     else:
         form = VeiculoForm()
-    return render(request, 'estacionamento/adicionar.html', {'form': form})
-
+    
+    context = {
+        'form': form,
+        'vagas_disponiveis': vagas_disponiveis
+    }
+    return render(request, 'estacionamento/adicionar.html', context)
 
 
 def lista_veiculos(request):
